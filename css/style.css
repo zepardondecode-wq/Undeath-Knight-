@@ -1,0 +1,190 @@
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
+html, body {
+  margin: 0; padding: 0; width: 100%; height: 100%;
+  overflow: hidden; background: #000; font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+  touch-action: none;
+}
+
+/* ---------- Rotate overlay ---------- */
+#rotate-overlay {
+  display: none; position: fixed; inset: 0; background: #050000; color: #d94c4c;
+  z-index: 99999; align-items: center; justify-content: center; text-align: center;
+  font-size: 1.4em; padding: 30px; letter-spacing: 1px;
+}
+@media (orientation: portrait) {
+  #rotate-overlay { display: flex; }
+}
+
+/* ================= TITLE / MAP SELECT (index.html) ================= */
+.screen {
+  position: fixed; inset: 0; display: none; flex-direction: column;
+  align-items: center; justify-content: center;
+  background-size: cover; background-position: center;
+}
+.screen.active { display: flex; }
+
+#title-screen {
+  background-color: #1a0303;
+}
+.title-overlay {
+  background: radial-gradient(ellipse at center, rgba(20,0,0,0.35) 0%, rgba(5,0,0,0.85) 75%);
+  width: 100%; height: 100%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; position: relative;
+}
+.game-title {
+  font-size: 4.2em; color: #e23b3b; letter-spacing: 6px;
+  text-shadow: 0 0 20px #7a0000, 0 0 45px #ff2b2b, 0 4px 0 #000;
+  margin: 0 0 0.3em 0; font-weight: 900;
+}
+.btn-play {
+  font-size: 1.6em; padding: 14px 55px; background: linear-gradient(180deg,#6b0000,#2a0000);
+  color: #ffbcbc; border: 2px solid #ff3b3b; border-radius: 10px; cursor: pointer;
+  letter-spacing: 3px; box-shadow: 0 0 25px rgba(255,0,0,0.5); margin-bottom: 18px;
+}
+.btn-play:active { transform: scale(0.96); }
+.btn-mute {
+  position: absolute; top: 18px; right: 18px; background: rgba(0,0,0,0.5); color: #ff8a8a;
+  border: 1px solid #a33; border-radius: 50%; width: 46px; height: 46px; font-size: 1.2em; cursor: pointer;
+}
+.credit {
+  position: absolute; bottom: 16px; color: #b34747; font-size: 0.85em; letter-spacing: 2px;
+}
+
+/* Map select */
+#map-select-screen { background: #0d0505; }
+.select-title { color: #ff5d5d; letter-spacing: 3px; margin-bottom: 18px; text-shadow: 0 0 12px #900; }
+.carousel {
+  width: 78%; max-width: 640px; height: 62%; position: relative; overflow: hidden;
+  border: 3px solid #7a1c1c; border-radius: 14px; touch-action: pan-y;
+}
+.carousel-track { display: flex; height: 100%; transition: transform 0.35s ease; }
+.map-card {
+  min-width: 100%; height: 100%; background-size: cover; background-position: center;
+  display: flex; align-items: flex-end; justify-content: center; position: relative;
+}
+.map-card::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.05) 55%);
+}
+.map-label {
+  position: relative; z-index: 2; color: #fff; text-align: center; padding-bottom: 18px;
+  font-size: 1.4em; letter-spacing: 2px; text-shadow: 0 2px 6px #000;
+}
+.map-label span { display: block; font-size: 0.55em; color: #ffcc77; margin-top: 4px; }
+.dots { margin-top: 14px; display: flex; gap: 10px; }
+.dot { width: 11px; height: 11px; border-radius: 50%; background: #552; opacity: 0.5; }
+.dot.active { background: #ff4d4d; opacity: 1; box-shadow: 0 0 8px #ff4d4d; }
+.btn-ok {
+  margin-top: 18px; font-size: 1.2em; padding: 10px 48px; background: linear-gradient(180deg,#6b0000,#2a0000);
+  color: #ffbcbc; border: 2px solid #ff3b3b; border-radius: 8px; cursor: pointer; letter-spacing: 2px;
+}
+
+/* ================= GAME (grave.html / snow.html) ================= */
+#game-canvas { position: fixed; inset: 0; width: 100%; height: 100%; background: #000; display: block; }
+
+#hud-top {
+  position: fixed; top: 10px; left: 10px; right: 10px; display: flex; align-items: center; gap: 14px;
+  z-index: 50; pointer-events: none;
+}
+#hud-top > * { pointer-events: auto; }
+#hp-wrap {
+  position: relative; width: 220px; height: 26px; background: #200; border: 2px solid #700; border-radius: 6px; overflow: hidden;
+}
+#hp-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: linear-gradient(90deg,#8f1616,#e23b3b); transition: width 0.15s; }
+#hp-text { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.75em; text-shadow: 0 1px 2px #000; }
+#coin-display, #kill-display {
+  color: #ffd76b; background: rgba(0,0,0,0.45); border: 1px solid #664; border-radius: 6px; padding: 4px 10px; font-size: 0.95em;
+}
+#kill-display { color: #d0d0ff; }
+#shop-btn, #exit-btn {
+  margin-left: auto; background: linear-gradient(180deg,#3a2a00,#1a1200); color: #ffd76b; border: 1px solid #a87;
+  border-radius: 6px; padding: 6px 12px; font-size: 0.9em; cursor: pointer;
+}
+#exit-btn { margin-left: 6px; color: #ffb3b3; }
+
+#boss-bar-wrap { position: fixed; top: 10px; left: 50%; transform: translateX(-50%); width: 56%; max-width: 520px; z-index: 51; text-align: center; }
+#boss-name-label { color: #ff6666; letter-spacing: 2px; font-size: 0.85em; text-shadow: 0 0 6px #900; margin-bottom: 3px; }
+#boss-bar-bg { background: #200; border: 2px solid #700; border-radius: 6px; height: 18px; overflow: hidden; }
+#boss-bar { height: 100%; width: 100%; background: linear-gradient(90deg,#6b0aad,#c23bff); transition: width 0.15s; }
+
+/* Joystick */
+#joystick-base {
+  position: fixed; left: 34px; bottom: 34px; width: 118px; height: 118px; border-radius: 50%;
+  background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.25); z-index: 60; touch-action: none;
+}
+#joystick-knob {
+  position: absolute; left: 50%; top: 50%; width: 52px; height: 52px; margin: -26px 0 0 -26px;
+  border-radius: 50%; background: radial-gradient(circle at 35% 35%, #999, #333); border: 2px solid #ccc;
+}
+
+/* Attack button */
+#attack-btn {
+  position: fixed; right: 34px; bottom: 46px; width: 92px; height: 92px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #d94c4c, #5a0d0d); border: 3px solid #ff8a8a;
+  color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.05em;
+  z-index: 60; box-shadow: 0 0 14px rgba(255,0,0,0.4); touch-action: none;
+}
+#attack-btn.charging { background: radial-gradient(circle at 35% 35%, #ffdd55, #a35a00); box-shadow: 0 0 26px #ffb400; }
+
+/* Skill buttons */
+#skills-wrap { position: fixed; right: 24px; bottom: 148px; display: flex; gap: 10px; z-index: 60; }
+.skill-btn {
+  position: relative; width: 58px; height: 58px; border-radius: 12px; background: rgba(15,10,25,0.8);
+  border: 2px solid #6a4fbf; display: flex; align-items: center; justify-content: center; font-size: 1.5em;
+  overflow: hidden; touch-action: none;
+}
+.skill-btn.ult { border-color: #ff4dd2; }
+.skill-btn.disabled { filter: grayscale(0.8) brightness(0.5); }
+.skill-cd {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.55); color: #fff; font-size: 0.9em; font-weight: bold;
+}
+.skill-cd:empty { display: none; }
+
+/* Shop modal */
+#shop-modal {
+  position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.72);
+  display: flex; align-items: center; justify-content: center;
+}
+#shop-modal.hidden { display: none; }
+#shop-panel {
+  position: relative; width: 88%; max-width: 620px; max-height: 84%; overflow-y: auto;
+  background: linear-gradient(180deg,#180a24,#0a0512); border: 2px solid #6a3fbf; border-radius: 14px;
+  padding: 20px 18px; box-shadow: 0 0 40px rgba(120,0,200,0.4);
+}
+#shop-panel h2 { text-align: center; color: #d9a8ff; letter-spacing: 3px; margin: 4px 0 6px 0; text-shadow: 0 0 10px #7a3fbf; }
+#shop-coin { text-align: center; color: #ffd76b; margin-bottom: 14px; }
+#shop-close {
+  position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; border-radius: 50%;
+  background: #3a0e0e; color: #ff9b9b; border: 1px solid #ff5b5b; font-size: 1.1em; cursor: pointer;
+}
+#shop-items { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.shop-item { background: rgba(255,255,255,0.04); border: 1px solid #4a3268; border-radius: 10px; padding: 10px; text-align: center; }
+.shop-item .icon { font-size: 1.8em; }
+.shop-item .name { color: #e6d6ff; font-size: 0.92em; margin: 4px 0 2px 0; font-weight: bold; }
+.shop-item .desc { color: #a690c9; font-size: 0.72em; min-height: 28px; }
+.shop-item button {
+  margin-top: 6px; width: 100%; padding: 6px 0; border-radius: 6px; border: 1px solid #8a5fd9;
+  background: linear-gradient(180deg,#4a1f8a,#2a0f52); color: #fff; font-size: 0.85em; cursor: pointer;
+}
+.shop-item button:disabled { opacity: 0.4; }
+
+/* Respawn / message screens */
+#respawn-screen, #boss-intro {
+  position: fixed; inset: 0; z-index: 300; background: rgba(10,0,0,0.85); display: flex;
+  flex-direction: column; align-items: center; justify-content: center; color: #fff; text-align: center;
+}
+#respawn-screen.hidden, #boss-intro.hidden { display: none; }
+#respawn-screen h2 { color: #ff4d4d; font-size: 2em; letter-spacing: 3px; text-shadow: 0 0 16px #900; }
+#respawn-screen button, #boss-intro button {
+  margin-top: 10px; font-size: 1.05em; padding: 10px 34px; background: linear-gradient(180deg,#6b0000,#2a0000);
+  color: #ffbcbc; border: 2px solid #ff3b3b; border-radius: 8px; cursor: pointer; letter-spacing: 2px;
+}
+#boss-intro h2 { color: #ff6b6b; font-size: 2.4em; text-shadow: 0 0 20px #a00; letter-spacing: 3px; }
+
+.floating-toast {
+  position: fixed; top: 70px; left: 50%; transform: translateX(-50%); z-index: 90;
+  background: rgba(0,0,0,0.6); color: #fff; padding: 6px 16px; border-radius: 8px; font-size: 0.9em;
+  opacity: 0; transition: opacity 0.3s;
+}
+.floating-toast.show { opacity: 1; }
