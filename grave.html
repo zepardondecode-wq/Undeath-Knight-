@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>UNDEATH KNIGHT - Grave</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="rotate-overlay">Putar perangkat Anda ke mode landscape 🔄</div>
+<canvas id="game-canvas"></canvas>
+
+<div id="hud-top">
+  <div id="hp-wrap"><div id="hp-bar"></div><span id="hp-text">200/200</span></div>
+  <div id="coin-display">🪙 <span id="coin-count">0</span></div>
+  <div id="kill-display">💀 <span id="kill-count">0</span>/100</div>
+  <button id="shop-btn">🛒 SHOP</button>
+  <button id="exit-btn">🏠</button>
+</div>
+
+<div id="boss-bar-wrap" style="display:none">
+  <div id="boss-name-label">BIG ZOMBIE</div>
+  <div id="boss-bar-bg"><div id="boss-bar"></div></div>
+</div>
+
+<div id="toast" class="floating-toast"></div>
+
+<div id="joystick-base"><div id="joystick-knob"></div></div>
+<div id="attack-btn">ATK</div>
+<div id="skills-wrap">
+  <div class="skill-btn" id="skill1"><span class="skill-icon">🧟</span><span class="skill-cd"></span></div>
+  <div class="skill-btn" id="skill2"><span class="skill-icon">⚔️</span><span class="skill-cd"></span></div>
+  <div class="skill-btn" id="skill3"><span class="skill-icon">💨</span><span class="skill-cd"></span></div>
+  <div class="skill-btn ult" id="skill4"><span class="skill-icon">☠️</span><span class="skill-cd"></span></div>
+</div>
+
+<div id="shop-modal" class="hidden">
+  <div id="shop-panel">
+    <button id="shop-close">✕</button>
+    <h2>TOKO KEGELAPAN</h2>
+    <div id="shop-coin">🪙 <span id="shop-coin-count">0</span></div>
+    <div id="shop-items"></div>
+  </div>
+</div>
+
+<div id="boss-intro" class="hidden">
+  <h2>⚠ BIG ZOMBIE MUNCUL ⚠</h2>
+</div>
+
+<div id="respawn-screen" class="hidden">
+  <h2>KAU TELAH GUGUR</h2>
+  <button id="respawn-btn">BANGKIT KEMBALI</button>
+  <button id="tomap-btn">KEMBALI KE PETA</button>
+</div>
+
+<script>
+window.GAME_CONFIG = {
+  mapName: "Grave",
+  bgImage: "https://files.catbox.moe/4tfxlu.png",
+  groundTint: "rgba(15,5,5,0.30)",
+  shape: "zombie",
+  enemyName: "Zombie Kecil",
+  enemyColor: "#5f7a45",
+  enemyDark: "#2e3d1c",
+  bossShape: "bigzombie",
+  bossName: "BIG ZOMBIE",
+  bossColor: "#3a4a26",
+  summonShape: "zombie",
+  summonName: "Zombie",
+  summonColor: "#7a9a5a",
+  summonDark: "#3c522a"
+};
+</script>
+<script src="js/engine.js"></script>
+</body>
+</html>
